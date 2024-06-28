@@ -40,14 +40,11 @@
           Bergungsfahrten zu verbessern. Nach einer erfolgreichen Bergung können Sie das Netz dort ebenfalls als
           "geborgen" markieren, damit es aus dem System entfernt wird.
         </p>
-        <h:commandLink value="Mehr Informationen über Geisternetze (NABU)"
-                       action="https://www.nabu.de/natur-und-landschaft/meere/lebensraum-meer/gefahren/24489.html"
-                       styleClass="button">
-          <i class="fas fa-info-circle"></i>
-        </h:commandLink>
+        <h:outputLink value="https://www.wwf.de/themen-projekte/plastik/geisternetze" styleClass="button" target="_blank">
+          <i class="fas fa-info-circle"></i> Mehr Informationen über Geisternetze (WWF)
+        </h:outputLink>
       </div>
-      <h:graphicImage value="#{request.contextPath}/resources/images/ghostnet.png" alt="Geisternetze im Meer"
-                      styleClass="header-image"/>
+      <h:graphicImage library="images" name="ghostnet.png" alt="Geisternetze im Meer" styleClass="header-image" />
     </div>
   </h:form>
 </h:body>
