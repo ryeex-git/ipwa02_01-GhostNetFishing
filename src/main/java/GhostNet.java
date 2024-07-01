@@ -1,7 +1,4 @@
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 
@@ -12,9 +9,12 @@ public class GhostNet implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String location;
-    private String size;
-    private String status;
+    private double lat;
+    private double lng;
+
+    private int size;
+    @Enumerated(EnumType.STRING)
+    private GhostNetStatus status;
 
     // Getter und Setter
     public Long getId() {
@@ -25,35 +25,45 @@ public class GhostNet implements Serializable {
         this.id = id;
     }
 
-    public String getLocation() {
-        return location;
+    public double getLat() {
+        return lat;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLat(double lat) {
+        this.lat = lat;
     }
 
-    public String getSize() {
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
+    public int getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(int size) {
         this.size = size;
     }
 
-    public String getStatus() {
+    public GhostNetStatus  getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(GhostNetStatus  status) {
         this.status = status;
     }
 
     public GhostNet() {}
 
-    public GhostNet(String location, String size, String status) {
-        this.location = location;
+    public GhostNet(double lat, double lng, int size, GhostNetStatus status) {
+        this.lat = lat;
+        this.lng = lng;
         this.size = size;
         this.status = status;
     }
 }
+

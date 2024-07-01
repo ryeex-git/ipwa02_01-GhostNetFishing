@@ -1,7 +1,5 @@
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Past;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -13,9 +11,19 @@ public class SightingReport  implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long netId;
-    private Long personId;
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "ghostnet_ghostnet_id", nullable = false)
+    private GhostNet netId;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "person_person_id")
+    private Person personId;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime reportTime;
+
+    @Past
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime sightingTime;
 
     // Getter und Setter
@@ -27,19 +35,19 @@ public class SightingReport  implements Serializable {
         this.id = id;
     }
 
-    public Long getNetId() {
+    public GhostNet getNetId() {
         return netId;
     }
 
-    public void setNetId(Long netId) {
+    public void setNetId(GhostNet netId) {
         this.netId = netId;
     }
 
-    public Long getPersonId() {
+    public Person getPersonId() {
         return personId;
     }
 
-    public void setPersonId(Long personId) {
+    public void setPersonId(Person personId) {
         this.personId = personId;
     }
 
@@ -61,7 +69,7 @@ public class SightingReport  implements Serializable {
 
     public SightingReport() {}
 
-    public SightingReport(Long netId, Long personId, LocalDateTime reportTime, LocalDateTime sightingTime) {
+    public SightingReport(GhostNet netId, Person personId, LocalDateTime reportTime, LocalDateTime sightingTime) {
         this.netId = netId;
         this.personId = personId;
         this.reportTime = reportTime;
