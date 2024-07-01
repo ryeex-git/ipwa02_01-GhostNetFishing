@@ -1,16 +1,14 @@
-import jakarta.ejb.Startup;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
 
-@Startup
-@ApplicationScoped
+@Stateless
 public class PersonDAO {
 
-    @PersistenceContext
+    @Inject
     EntityManager em;
 
     @Transactional

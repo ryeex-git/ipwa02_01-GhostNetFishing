@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-public class SightingReport  implements Serializable {
+public class SightingReport implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +25,16 @@ public class SightingReport  implements Serializable {
     @Past
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime sightingTime;
+
+    public SightingReport() {
+    }
+
+    public SightingReport(GhostNet netId, Person personId, LocalDateTime reportTime, LocalDateTime sightingTime) {
+        this.netId = netId;
+        this.personId = personId;
+        this.reportTime = reportTime;
+        this.sightingTime = sightingTime;
+    }
 
     // Getter und Setter
     public Long getId() {
@@ -64,15 +74,6 @@ public class SightingReport  implements Serializable {
     }
 
     public void setSightingTime(LocalDateTime sightingTime) {
-        this.sightingTime = sightingTime;
-    }
-
-    public SightingReport() {}
-
-    public SightingReport(GhostNet netId, Person personId, LocalDateTime reportTime, LocalDateTime sightingTime) {
-        this.netId = netId;
-        this.personId = personId;
-        this.reportTime = reportTime;
         this.sightingTime = sightingTime;
     }
 }

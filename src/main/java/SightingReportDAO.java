@@ -1,11 +1,14 @@
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
 
+@Stateless
 public class SightingReportDAO {
-    @PersistenceContext
+
+    @Inject
     private EntityManager em;
 
     @Transactional

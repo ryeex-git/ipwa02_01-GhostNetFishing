@@ -2,50 +2,54 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
       lang="de">
 <h:head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="author" content="Dominik Bayer"/>
-  <meta name="description"
-        content="Dem Fischsterben wird nun ein Ende gesetzt!"/>
-  <link rel="stylesheet" href="#{request.contextPath}/resources/css/index.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
-  <title>GhostNets</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="Dominik Bayer"/>
+    <meta name="description"
+          content="Dem Fischsterben wird nun ein Ende gesetzt!"/>
+    <link rel="stylesheet" href="#{request.contextPath}/resources/css/index.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <title>GhostNets</title>
 </h:head>
 <h:body>
-  <h:form>
-    <ui:include src="header.xhtml" />
-    <div class="content">
-      <div class="text-content">
-        <h1>GhostNets</h1>
-        <h3>Dem Fischsterben wird nun ein Ende gesetzt!</h3>
-        <p>
-          Geisternetze, auch als "Ghostnets" bekannt, sind verlorene oder absichtlich zurückgelassene Fischernetze,
-          die jährlich etwa 640.000 Tonnen Meeresmüll ausmachen. Diese langlebigen Netze treiben unkontrolliert durch
-          die Ozeane und fangen dabei Fische, Meeressäuger und Vögel, was jedes Jahr zum Tod von Hunderttausenden
-          Tieren führt. Sie können bis zu 100 Jahre oder länger im Wasser verbleiben und tragen erheblich zur
-          Mikroplastikverschmutzung bei, die die Meeresumwelt nachhaltig schädigt.
-        </p>
-        <p>
-          Zur Bekämpfung dieses globalen Problems arbeiten wir daran, mithilfe von Freiwilligen, verlorene Netze
-          aufzuspüren und zu bergen. Helfen Sie uns, die umhertreibenden Geisternetze zu besiegen und unsere Ozeane zu
-          schützen.
-        </p>
-        <p>
-          Mithilfe des Navigationsmenüs gelangen Sie zur Kartenansicht, wo gemeldete Netze angezeigt werden. Falls Sie
-          ein neues Netz entdeckt haben, können Sie es unter "Netzfund" eintragen. Wenn Sie an der Position eines
-          gemeldeten Netzes feststellen, dass es nicht mehr vorhanden ist, melden Sie es bitte als "verschwunden". Wenn
-          Sie eine Bergungsaktion planen, tragen Sie diese unter "Bergungsplanung" ein, um die Koordination der
-          Bergungsfahrten zu verbessern. Nach einer erfolgreichen Bergung können Sie das Netz dort ebenfalls als
-          "geborgen" markieren, damit es aus dem System entfernt wird.
-        </p>
-        <h:outputLink value="https://www.wwf.de/themen-projekte/plastik/geisternetze" styleClass="button" target="_blank">
-          <i class="fas fa-info-circle"></i> Mehr Informationen über Geisternetze (WWF)
-        </h:outputLink>
-      </div>
-      <h:graphicImage library="images" name="ghostnet.png" alt="Geisternetze im Meer" styleClass="header-image" />
-    </div>
-  </h:form>
+    <h:form>
+        <ui:include src="header.xhtml"/>
+        <div class="content">
+            <div class="text-content">
+                <p:card style="box-shadow: 0px 10px 52px 0px rgba(255,255,255,0.4); background-color: #161519 !important;">
+                    <h1>GhostNets</h1>
+                    <h3>Dem Fischsterben wird nun ein Ende gesetzt!</h3>
+                    <p>
+                        Geisternetze, auch als "Ghostnets" bekannt, sind verlorene oder absichtlich zurückgelassene Fischernetze,
+                        die jährlich etwa 640.000 Tonnen Meeresmüll ausmachen. Diese langlebigen Netze treiben unkontrolliert durch
+                        die Ozeane und fangen dabei Fische, Meeressäuger und Vögel, was jedes Jahr zum Tod von Hunderttausenden
+                        Tieren führt. Sie können bis zu 100 Jahre oder länger im Wasser verbleiben und tragen erheblich zur
+                        Mikroplastikverschmutzung bei, die die Meeresumwelt nachhaltig schädigt.
+                    </p>
+                    <p>
+                        Zur Bekämpfung dieses globalen Problems arbeiten wir daran, mithilfe von Freiwilligen, verlorene Netze
+                        aufzuspüren und zu bergen. Helfen Sie uns, die umhertreibenden Geisternetze zu besiegen und unsere Ozeane zu
+                        schützen.
+                    </p>
+                    <p>
+                        Mithilfe des Navigationsmenüs gelangen Sie zur Kartenansicht, wo gemeldete Netze angezeigt werden. Falls Sie
+                        ein neues Netz entdeckt haben, können Sie es unter "Netzfund" eintragen. Wenn Sie an der Position eines
+                        gemeldeten Netzes feststellen, dass es nicht mehr vorhanden ist, melden Sie es bitte als "verschwunden". Wenn
+                        Sie eine Bergungsaktion planen, tragen Sie diese unter "Bergungsplanung" ein, um die Koordination der
+                        Bergungsfahrten zu verbessern. Nach einer erfolgreichen Bergung können Sie das Netz dort ebenfalls als
+                        "geborgen" markieren, damit es aus dem System entfernt wird.
+                    </p>
+                    <h:outputLink value="https://www.wwf.de/themen-projekte/plastik/geisternetze" styleClass="button"
+                                  target="_blank">
+                        <i class="fas fa-info-circle"/>Mehr Informationen über Geisternetze (WWF)
+                    </h:outputLink>
+                </p:card>
+            </div>
+            <h:graphicImage library="images" name="ghostnet.png" alt="Geisternetze im Meer" styleClass="header-image"/>
+        </div>
+    </h:form>
 </h:body>
 </html>

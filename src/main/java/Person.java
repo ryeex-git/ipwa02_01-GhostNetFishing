@@ -1,3 +1,5 @@
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Named;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -6,6 +8,8 @@ import jakarta.persistence.Id;
 import java.io.Serializable;
 
 @Entity
+@Named
+@RequestScoped
 public class Person implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,6 +17,15 @@ public class Person implements Serializable {
     private String firstname;
     private String lastname;
     private String phoneNumber;
+
+    public Person() {
+    }
+
+    public Person(String firstname, String lastname, String phoneNumber) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.phoneNumber = phoneNumber;
+    }
 
     // Getter und Setter
     public Long getId() {
@@ -47,11 +60,4 @@ public class Person implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public Person() {}
-
-    public Person(String firstname, String lastname, String phoneNumber) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.phoneNumber = phoneNumber;
-    }
 }

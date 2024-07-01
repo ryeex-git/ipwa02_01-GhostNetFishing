@@ -11,10 +11,20 @@ public class GhostNet implements Serializable {
 
     private double lat;
     private double lng;
-
     private int size;
+
     @Enumerated(EnumType.STRING)
     private GhostNetStatus status;
+
+    public GhostNet() {
+    }
+
+    public GhostNet(double lat, double lng, int size, GhostNetStatus status) {
+        this.lat = lat;
+        this.lng = lng;
+        this.size = size;
+        this.status = status;
+    }
 
     // Getter und Setter
     public Long getId() {
@@ -49,20 +59,11 @@ public class GhostNet implements Serializable {
         this.size = size;
     }
 
-    public GhostNetStatus  getStatus() {
+    public GhostNetStatus getStatus() {
         return status;
     }
 
-    public void setStatus(GhostNetStatus  status) {
-        this.status = status;
-    }
-
-    public GhostNet() {}
-
-    public GhostNet(double lat, double lng, int size, GhostNetStatus status) {
-        this.lat = lat;
-        this.lng = lng;
-        this.size = size;
+    public void setStatus(GhostNetStatus status) {
         this.status = status;
     }
 }

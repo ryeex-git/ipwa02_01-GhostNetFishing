@@ -24,7 +24,16 @@ body {
     width: 600px;
     height: auto;
     margin: 20px 0;
+    padding-left: 2em;
+    padding-top: 10em;
 }
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
 
 p {
     line-height: 1.6;

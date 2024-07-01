@@ -12,11 +12,17 @@ public class SightingReportBEAN {
     @Inject
     private SightingReportDAO sightingReportDAO;
 
-    private SightingReport sightingReport = new SightingReport();
+    @Inject
+    private PersonDAO personDAO;
+    @Inject
+    private Person person;
+
+    private SightingReport sightingReport;
     private List<SightingReport> sightingReports;
 
     @PostConstruct
     public void init() {
+        sightingReport = new SightingReport();
         sightingReports = sightingReportDAO.findAll();
     }
 
@@ -52,4 +58,6 @@ public class SightingReportBEAN {
     public void setSightingReports(List<SightingReport> sightingReports) {
         this.sightingReports = sightingReports;
     }
+
+
 }
