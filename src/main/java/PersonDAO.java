@@ -3,10 +3,11 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Stateless
-public class PersonDAO {
+public class PersonDAO implements Serializable {
 
     @Inject
     EntityManager em;

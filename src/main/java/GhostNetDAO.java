@@ -3,10 +3,11 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Stateless
-public class GhostNetDAO {
+public class GhostNetDAO implements Serializable {
 
     @Inject
     private EntityManager em;

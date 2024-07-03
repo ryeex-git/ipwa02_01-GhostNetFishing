@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
       lang="de">
 <h:head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
@@ -21,8 +21,127 @@
         <div class="content">
             <p:gmap center="20,0" zoom="2" type="TERRAIN"
                     style="width:100%;height:500px;box-shadow: 0px 10px 52px 0px rgba(255,255,255,0.4);"
-                    mapTypeControl="false" fitBounds="true"/>
+                    mapTypeControl="false" fitBounds="true" model="#{mapsBean.mapModel}">
+                <p:ajax event="overlaySelect" listener="#{mapsBean.onMarkerSelect}" update="infoWindow"/>
+                <p:gmapInfoWindow id="infoWindow">
+                    <p:outputPanel style="text-align: center; display: block; margin: auto; color: black;">
+                        <b><h:outputText value="#{mapsBean.returnStatusName(mapsBean.marker.title)}"/></b>
+                        <br/>
+                        <h:outputText value="#{mapsBean.marker.latlng}"/> <br/>
+                        <h:outputText value="#{mapsBean.searchGhostNet(mapsBean.marker.data)}"/>
+                        <h:panelGroup rendered="#{mapsBean.marker != null and mapsBean.marker.title != 'SALVAGED'}">
+                            <h3><strong>Aktualisieren:</strong></h3>
+                            <div>
+                                <p:commandButton styleClass="ui-button-primary" icon="fas fa-question"
+                                                 value="Verschollen"
+                                                 rendered="#{mapsBean.marker != null and (mapsBean.getGhostNetStatusOutOfString(mapsBean.marker.data) == 0 or mapsBean.getGhostNetStatusOutOfString(mapsBean.marker.data) == 1)}"
+                                                 action="#{mapsBean.setReportStatus(mapsBean.getGhostNetStatusByName('LOST'))}"/>
+                                <p:commandButton styleClass="ui-button-danger" icon="fas fa-eye"
+                                                 value="Erneute Sichtung"
+                                                 rendered="#{mapsBean.marker != null and (mapsBean.getGhostNetStatusOutOfString(mapsBean.marker.data) == 0 or mapsBean.getGhostNetStatusOutOfString(mapsBean.marker.data) == 1 or mapsBean.getGhostNetStatusOutOfString(mapsBean.marker.data) == 3)}"
+                                                 action="#{mapsBean.setReportStatus(mapsBean.getGhostNetStatusByName('REPORTED'))}"/>
+                                <p:commandButton styleClass="ui-button-warning" icon="fas fa-spinner"
+                                                 value="Bergung geplant"
+                                                 rendered="#{mapsBean.marker != null and mapsBean.getGhostNetStatusOutOfString(mapsBean.marker.data) == 0}"
+                                                 action="#{mapsBean.setReportStatus(mapsBean.getGhostNetStatusByName('SALVAGE_PENDING'))}"/>
+                                <p:commandButton styleClass="ui-button-success" icon="fas fa-check"
+                                                 value="Erfolgte Bergung"
+                                                 rendered="#{mapsBean.marker != null and mapsBean.getGhostNetStatusOutOfString(mapsBean.marker.data) == 1}"
+                                                 action="#{mapsBean.setReportStatus(mapsBean.getGhostNetStatusByName('SALVAGED'))}"/>
+                            </div>
+                        </h:panelGroup>
+                    </p:outputPanel>
+                </p:gmapInfoWindow>
+            </p:gmap>
         </div>
+        <h:form enctype="multipart/form-data" rendered="#{mapsBean.missingReport}">
+            <div>
+                <h2>Netz verschollen melden:</h2>
+            </div>
+            <div>
+                <h4>ToDo: Diese Funktion muss erst noch implementiert werden</h4>
+            </div>
+        </h:form>
+        <h:form enctype="multipart/form-data" rendered="#{mapsBean.reSightedReport}">
+            <div>
+                <h2>Erneute Sichtung des Netzes Melden:</h2>
+            </div>
+            <div>
+                <h4>ToDo: Diese Funktion muss erst noch implementiert werden</h4>
+            </div>
+        </h:form>
+        <h:form enctype="multipart/form-data" rendered="#{mapsBean.plannedSalvageReport}">
+            <div>
+                <h2>Geplante Bergung Melden:</h2>
+                <div>
+                    <div>
+                        <p:outputLabel for="ghostNetID" value="Netz-Nummer:"/>
+                        <p:inputText type="number" rows="1" id="ghostNetID" value="#{mapsBean.marker.data}"
+                                     disabled="true"/>
+                    </div>
+                    <div class="form-group">
+                        <p:outputLabel for="firstname" value="Vorname:"/><br/>
+                        <p:inputText id="firstname" value="#{mapsBean.person.firstname}"
+                                     required="false"/>
+                    </div>
+
+                    <div class="form-group">
+                        <p:outputLabel for="lastname" value="Nachname:"/><br/>
+                        <p:inputText id="lastname" value="#{mapsBean.person.lastname}"
+                                     required="false"/>
+                    </div>
+                    <div class="form-group">
+                        <p:outputLabel for="phone" value="Telefonnummer (inkl. Landesvorwahl):"/><br/>
+                        <p:inputText id="phone" value="#{mapsBean.person.phoneNumber}" required="false">
+                            <f:validateRegex
+                                    pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$"/>
+                            <f:ajax event="blur" render="phoneMessage"/>
+                        </p:inputText>
+                        <p:message id="phoneMessage" for="phone" style="color: red;"/>
+                    </div>
+                    <div class="flex align-content-center flex-wrap ml-3">
+                        <p:commandButton value="Senden"
+                                         action="#{mapsBean.updateReportAndPerson(mapsBean.ghostNetStatus.SALVAGE_PENDING, mapsBean.marker.data)}"/>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+        <h:form enctype="multipart/form-data" rendered="#{mapsBean.successfulSalvageReport}">
+            <div>
+                <h2>Erfolgte Bergung Melden:</h2>
+                <div>
+                    <div>
+                        <p:outputLabel for="ghostNetIDSuccess" value="Netz-Nummer:"/>
+                        <p:inputText type="number" rows="1" id="ghostNetIDSuccess" value="#{mapsBean.marker.data}"
+                                     disabled="true"/>
+                    </div>
+                    <div class="form-group">
+                        <p:outputLabel for="firstnameSuccess" value="Vorname:"/><br/>
+                        <p:inputText id="firstnameSuccess" value="#{mapsBean.person.firstname}"
+                                     required="false"/>
+                    </div>
+
+                    <div class="form-group">
+                        <p:outputLabel for="lastnameSuccess" value="Nachname:"/><br/>
+                        <p:inputText id="lastnameSuccess" value="#{mapsBean.person.lastname}"
+                                     required="false"/>
+                    </div>
+                    <div class="form-group">
+                        <p:outputLabel for="phoneSuccess" value="Telefonnummer (inkl. Landesvorwahl):"/><br/>
+                        <p:inputText id="phoneSuccess" value="#{mapsBean.person.phoneNumber}" required="false">
+                            <f:validateRegex
+                                    pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$"/>
+                            <f:ajax event="blur" render="phoneMessageSuccess"/>
+                        </p:inputText>
+                        <p:message id="phoneMessageSuccess" for="phoneSuccess" style="color: red;"/>
+                    </div>
+                    <div class="flex align-content-center flex-wrap ml-3">
+                        <p:commandButton value="Senden"
+                                         action="#{mapsBean.updateReportAndPerson(mapsBean.ghostNetStatus.SALVAGED, mapsBean.marker.data)}"/>
+                    </div>
+                </div>
+            </div>
+        </h:form>
     </h:form>
 </h:body>
 </html>

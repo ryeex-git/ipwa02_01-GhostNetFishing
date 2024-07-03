@@ -3,10 +3,11 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Stateless
-public class SightingReportDAO {
+public class SightingReportDAO implements Serializable {
 
     @Inject
     private EntityManager em;
@@ -18,6 +19,12 @@ public class SightingReportDAO {
 
     public SightingReport find(Long id) {
         return em.find(SightingReport.class, id);
+    }
+
+    public SightingReport findByGhostNetId(Long id) {
+        return em.createQuery("SELECT s FROM SightingReport s WHERE s.netId = :ghostNetId", SightingReport.class)
+                .setParameter("ghostNetId", id)
+                .getSingleResult();
     }
 
     public List<SightingReport> findAll() {
