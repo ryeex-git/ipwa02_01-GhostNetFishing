@@ -57,7 +57,7 @@ public class MapsBEAN implements Serializable {
             if (!txn.isActive()) {
                 txn.begin();
             }
-            SightingReport sightingReport = sightingReportDAO.findByGhostNetId(ghostNetId);
+            SightingReport sightingReport = sightingReportDAO.find(ghostNetId);
             if (!person.getFirstname().isEmpty() || !person.getLastname().isEmpty() || !person.getPhoneNumber().isEmpty()) {
                 personDAO.create(person);
                 sightingReport.setPersonId(person);
@@ -68,6 +68,7 @@ public class MapsBEAN implements Serializable {
 
             sightingReportDAO.create(sightingReport);
             txn.commit();
+            initializeMap();
         } catch (Exception e) {
             if (txn.isActive()) {
                 txn.rollback();
@@ -161,11 +162,15 @@ public class MapsBEAN implements Serializable {
         this.person = person;
     }
 
-    public GhostNetStatus getGhostNetStatusByName(String name) {
-        return GhostNetStatus.valueOf(name);
+    public GhostNetStatus getGhostNetStatus() {
+        return ghostNetStatus;
     }
 
     public void setGhostNetStatus(GhostNetStatus ghostNetStatus) {
         this.ghostNetStatus = ghostNetStatus;
+    }
+
+    public GhostNetStatus getGhostNetStatusByName(String name) {
+        return GhostNetStatus.valueOf(name);
     }
 }
